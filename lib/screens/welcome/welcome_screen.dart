@@ -4,7 +4,21 @@ import '../../constents.dart';
 import '../../moduls/animated_text.dart';
 import '../quiz/quiz_screen.dart';
 
-class WelcomeScreen extends StatelessWidget {
+class WelcomeScreen extends StatefulWidget {
+  @override
+  State<WelcomeScreen> createState() => _WelcomeScreenState();
+}
+
+class _WelcomeScreenState extends State<WelcomeScreen> {
+  final TextEditingController _textEditingController = TextEditingController();
+  late String userName;
+  @override
+  void dispose() {
+    // Don't forget to dispose the TextEditingController when the widget is removed from the tree.
+    _textEditingController.dispose();
+    super.dispose();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -33,8 +47,16 @@ class WelcomeScreen extends StatelessWidget {
                   const SizedBox(
                     height: 100,
                   ), // 1/6
-                  const TextField(
-                    decoration: InputDecoration(
+                  TextField(
+                    controller: _textEditingController,
+                    onChanged: (value) {
+                      userName = value;
+
+                      // This callback will be triggered whenever the text in the TextField changes.
+                      // You can perform your input validation or manipulation here.
+                      // For example, you can restrict the input to only allow certain characters or format the input.
+                    },
+                    decoration: const InputDecoration(
                       filled: true,
                       fillColor: Colors.white,
                       hintText: "Full Name",
@@ -45,7 +67,7 @@ class WelcomeScreen extends StatelessWidget {
                   ),
                   const SizedBox(height: 30),
                   InkWell(
-                    onTap: () => Get.to(() => const QuizScreen()),
+                    onTap: _handleSubmit,
                     child: Container(
                       width: double.infinity,
                       alignment: Alignment.center,
@@ -72,5 +94,32 @@ class WelcomeScreen extends StatelessWidget {
         ],
       ),
     );
+  }
+
+  void _handleSubmit() {
+    String inputText = _textEditingController.text;
+    if (inputText.isEmpty) {
+      showDialog(
+        context: context,
+        builder: (BuildContext context) {
+          return AlertDialog(
+            title: const Text('Error'),
+            content: const Text('Please enter some text.'),
+            actions: [
+              TextButton(
+                onPressed: () {
+                  Navigator.of(context).pop();
+                },
+                child: const Text('OK'),
+              ),
+            ],
+          );
+        },
+      );
+    } else {
+      // Perform the desired action with the input text
+      // For example, submit it to a backend server.
+      print('Submitted text: $inputText');
+    }
   }
 }

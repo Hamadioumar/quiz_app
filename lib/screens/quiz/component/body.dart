@@ -18,13 +18,13 @@ class Body extends StatelessWidget {
       children: [
         SafeArea(
           child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
+            crossAxisAlignment: CrossAxisAlignment.center,
             children: [
               Padding(
                 padding:
                     const EdgeInsets.symmetric(horizontal: kDefaultPadding),
                 child: Obx(
-                  () => Text.rich(
+                  () => Text.rich(   
                     TextSpan(
                       text:
                           "Question ${_questionController.questionNumber.value}",

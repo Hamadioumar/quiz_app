@@ -14,10 +14,10 @@ class QuestionController extends GetxController
   late AnimationController _animationController;
   late Animation _animation;
   // so that we can access our animation outside
-  Animation get animation => this._animation;
+  Animation get animation => _animation;
 
   late PageController _pageController;
-  PageController get pageController => this._pageController;
+  PageController get pageController => _pageController;
 
   final List<Question> _questions = sample_data
       .map(
@@ -28,23 +28,23 @@ class QuestionController extends GetxController
             answer: question['answer_index']),
       )
       .toList();
-  List<Question> get questions => this._questions;
+  List<Question> get questions => _questions;
 
   bool _isAnswered = false;
-  bool get isAnswered => this._isAnswered;
+  bool get isAnswered => _isAnswered;
 
   late int _correctAns;
-  int get correctAns => this._correctAns;
+  int get correctAns => _correctAns;
 
   late int _selectedAns;
-  int get selectedAns => this._selectedAns;
+  int get selectedAns => _selectedAns;
 
   // for more about obs please check documentation
   final RxInt _questionNumber = 1.obs;
-  RxInt get questionNumber => this._questionNumber;
+  RxInt get questionNumber => _questionNumber;
 
   int _numOfCorrectAns = 0;
-  int get numOfCorrectAns => this._numOfCorrectAns;
+  int get numOfCorrectAns => _numOfCorrectAns;
 
   // called immediately after the widget is allocated memory
   @override
@@ -86,7 +86,7 @@ class QuestionController extends GetxController
     update();
 
     // Once user select an ans after 3s it will go to the next qn
-    Future.delayed(Duration(seconds: 3), () {
+    Future.delayed(const Duration(seconds: 3), () {
       nextQuestion();
     });
   }
@@ -95,7 +95,7 @@ class QuestionController extends GetxController
     if (_questionNumber.value != _questions.length) {
       _isAnswered = false;
       _pageController.nextPage(
-          duration: Duration(milliseconds: 250), curve: Curves.ease);
+          duration: const Duration(milliseconds: 250), curve: Curves.ease);
 
       // Reset the counter
       _animationController.reset();
