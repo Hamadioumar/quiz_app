@@ -119,6 +119,7 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
     } else {
       // Perform the desired action with the input text
       // For example, submit it to a backend server.
+      Get.to(() => const QuizScreen());
       print('Submitted text: $inputText');
     }
   }
