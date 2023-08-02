@@ -33,7 +33,7 @@ class QuestionController extends GetxController
   bool _isAnswered = false;
   bool get isAnswered => _isAnswered;
 
-  late int _correctAns;
+  late int _correctAns = 0;
   int get correctAns => _correctAns;
 
   late int _selectedAns;
@@ -105,7 +105,8 @@ class QuestionController extends GetxController
       _animationController.forward().whenComplete(nextQuestion);
     } else {
       // Get package provide us simple way to naviigate another page
-      Get.to(ScoreScreen());
+
+      Get.to(() => ScoreScreen());
     }
   }
 
